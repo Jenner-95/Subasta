@@ -1,25 +1,12 @@
-# Auction
-
-![Github Followers](https://img.shields.io/github/followers/shaw8wit?label=Follow&style=plastic)
-![GitHub stars](https://img.shields.io/github/stars/shaw8wit/Auction?style=plastic)
-![GitHub forks](https://img.shields.io/github/forks/shaw8wit/Auction?style=plastic)
-![GitHub watchers](https://img.shields.io/github/watchers/shaw8wit/Auction?style=plastic)
-
-![Demo Screen](https://github.com/shaw8wit/Auction/blob/master/screenshots/watchlist.png)
-
-A fully functional Auction website in Django. With configured admin panel.
-
-View all screenshots [here](https://github.com/shaw8wit/Auction/blob/master/screenshots/)
-
 ## About
-+ This is a dummy-website for holding Auctions.
-+ Users can view listings, its bids and comments without signing in.
-+ To place a Listing for auction and to bid on other auctions users have to register and login.
-+ In addition to the above users can also add listings to watchlist.
-+ A listings bidding can be stopped only by its author at any time making it inactive.
-+ The inactive listing is same as the active one except that the bidding has now stopped.
-+ Users can add categories and filter listings according to the categories.
-+ Appropriate alert messages are shown for actions.
++ The company Venta de Autos S.A, has considered expanding its sales operations, the which aims to carry out vehicle sales over the internet through OnLine auctions. 
++ Consider auctioning any type of vehicle, model and year, the
+they can be in good condition, used, new or they can be crashed.
++ The vehicle auction, within its rules will consider, any person may
+to participate in the auction, the only requirement is to register in advance, the price will be in dollars and the exchange time will have verification with the Banguat to have the cost up to date at the time of making the inquiry, the auction will be once a week, will consider all the vehicles that have already been reserved with the base price, in the auction will be able to participate all customers who want and will have a maximum of 2 minutes for each vehicle. 
++ It is expected to auction about 50 vehicles weekly and a customer can participate in a maximum of 10 opportunities (different vehicle) for each auction, that is to say, in one day the most you can buy are 10 vehicles. 
++ The Auction hours will normally be from 5:30 pm to 7:20 pm on Monday
+or Friday.
 
 ## Database
 + Connect any relational database or use the built in SQLite database.
