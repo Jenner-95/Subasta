@@ -1,0 +1,67 @@
+{% extends "auctions/layout.html" %}
+
+{% block title %}
+Crear Registro
+{% endblock %}
+
+{% block body %}
+
+<div class="pt-4 mt-4">
+    <form action="{% url 'createListing' %}" method="post">
+        {% csrf_token %}
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label class="first" for="title">Vehiculo</label>
+                <input autofocus type="text"  name="title" class="form-control job-input ">
+            </div>
+            <div class="col">
+                <label class="first" for="startBid">Precio Inicial</label>
+                <input type="number" name="startBid" class="form-control job-input" placeholder="0.0" step=".01">
+            </div>
+        </div>
+
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label class="first" for="title">Tipo</label>
+                <input type="text"  name="type_vehiculo" class="form-control job-input ">
+            </div>
+            <div class="col">
+                <label class="first" for="startBid">Modelo</label>
+                <input type="text" name="model" class="form-control job-input">
+            </div>
+        </div>
+
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label class="first" for="title">Año</label>
+                <input type="text"  name="year" class="form-control job-input ">
+            </div>
+            <div class="col">
+                <label class="first" for="description">Descripcion</label>
+            <textarea class="form-control job-input" name="description" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="form-row form-group mt-2">
+            <div class="col">
+                <label class="first" for="url">Url Imagen</label>
+                <input type="url" name="url" class="form-control job-input">
+            </div>
+            <div class="col">
+                <label class="first" for="category">Categoria</label>
+                <select class="form-control job-input" name="category">
+                    {% for category in categories %}
+                    <option value={{ category }}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="gradient-button add-listing">Guardar</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

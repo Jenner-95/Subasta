@@ -1,0 +1,117 @@
+{% extends 'auctions/layout.html'%}
+
+{% block title %}
+{{ item.name }}
+{% endblock %}
+
+{% block body %}
+<div class="container detail-page">
+    <h4 class="mb-3">Vehiculo: <span class="title first ">{{ item.name }} {{item.model}} {{item.year}} </span></h4>
+    <h5 class="mb-3">Tipo: <span class="first">{{ item.type_vehiculo }}</span></h5>
+
+    <div class="image">
+        <img class="big" src="{{ item.imageUrl }}" alt="{{ item.id }}">
+    </div>
+    <div class="item-description">
+        {{ item.description }}
+    </div>
+    <div class="bid">
+        Precio Inicial: <strong class="first">${{ item.startBid }}</strong>
+    </div>
+    {% for bid in bids %}
+    <div class="text-center">{{ bid.user.username }} subasto <strong>{{ bid.bidValue }}</strong> a las 
+        {{ bid.date|date:'M d, h:i a' }}</div>
+    {% empty %}
+    <div class="alert alert-warning text-center ">
+        Aun no hay ofertas!
+    </div>
+    {% endfor %}
+
+    <section class="my-3">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        {% if bid and item.active == False %}
+
+        <div class="alert alert-dark text-center">
+            {% if bid.user.username == user.username %}
+            ¡Ganaste la subasta!
+            {% else %}
+            <strong>{{ bid.user.username }}</strong> ganó, con una oferta de <strong>${{ bid.bidValue }}</strong>
+            {% endif %}
+        </div>
+
+        {% endif %}
+
+        {% if item.active and user.is_authenticated %}
+        <form action="{% url 'bid' item.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="number" name="bid" class="form-control" placeholder="Escribe acá tu oferta" step=".01">
+            </div>
+            <div class="row justify-content-around">
+                <button class="btn btn-primary" type="submit">Ofertar</button>
+                {% if item.user.username == user.username %}
+                <a href="{% url 'end' item.id %}">
+                    <button class="btn btn-warning" type="button">Fin de subasta</button>
+                </a>
+                {% endif %}
+            </div>
+        </form>
+        {% endif %}
+    </section>
+
+    <section>
+        Detalles:
+        <ul>
+            <li>Usuario: <strong>{{ item.user.username }}</strong></li>
+            <li>Categoria: <strong>{{ item.category.name }}</strong></li>
+            <li>Fecha: <strong>{{ item.date }}</strong></li>
+        </ul>
+    </section>
+
+    <section>
+        Comentarios:
+        {% for comment in comments %}
+        <div class="card comment">
+            <div class="card-body">
+                <div class="card-title">
+                    <strong>{{ comment.user.username }}</strong>: {{ comment.commentValue }}
+                </div>
+                <div class="card-text">
+                    <small>Comentado: <strong>{{ comment.date|date:'M d, h:i a' }}</strong></small>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info mt-2">
+            Sin comentarios aún
+        </div>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <form action="{% url 'comment' item.id %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <textarea name="content" rows="4" class="form-control" placeholder="Ingresa tu comentario"></textarea>
+            </div>
+            <button class="btn btn-dark py-2 px-4" type="submit">Enviar</button>
+        </form>
+
+        <form action="{% url 'watchlist' %}" method="post" class="add-category">
+            {% csrf_token %}
+            <input type="hidden" name="item" value="{{ item.id }}">
+            <input type="hidden" value="{% if item in user.watchlist.all %}0{% else %}1{% endif %}" name="status">
+            <button class="gradient-button watchlist" type="submit">
+                {% if item in user.watchlist.all %}Eliminar de{% else %}Añadir a{% endif %} Subastas
+            </button>
+        </form>
+        {% endif %}
+    </section>
+
+
+</div>
+{% endblock %}
