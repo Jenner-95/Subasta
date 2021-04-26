@@ -7,6 +7,10 @@ from django.db import IntegrityError
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login, logout
+from zeep import Client
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 
 from .models import User, Category, AuctionListing, Bid, Comment
 
@@ -137,6 +141,14 @@ def filter(request, name):
     return render(request, "auctions/index.html", {
         "objects": obj
     })
+
+
+@api_view(('GET',))
+def tipo_cambio(request):
+    wsdl = 'http://www.banguat.gob.gt/variables/ws/TipoCambio.asmx?WSDL'
+    client = Client(wsdl)
+    response = client.service.TipoCambioDia()
+    return Response({"data": response['CambioDolar']['VarDolar'][0]['referencia']})
 
 
 @login_required
